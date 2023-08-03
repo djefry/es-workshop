@@ -12,8 +12,33 @@ Basically you don't need to think much about this because when you run docker-co
 - elasticsearch:7.17.7
 - kibana:7.17.7
 
-
 ## Index Operation
 
+## Analyzer
+
+## Mapping
+
+## Index Operation
+#### Auto create index
+POST article/_doc
+{
+  "title": "World War III Films",
+  "description": "Film that shows the situation of world war III"
+}
+
+PUT article/_doc/1
+{
+  "title": "The Witcher III",
+  "description": "Game that use by most of reviewer to test the GPU or gaming performance"
+}
+
+#### Partial update data
+POST article/_doc/1/_update
+{
+  "title": "Residen Evil",
+  "description": "Another game that use by reviewer to test gamming performance"
+}
+
+## Check Index
 
 ## Search Operation
