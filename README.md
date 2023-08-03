@@ -21,6 +21,9 @@ Basically you don't need to think much about this because when you run docker-co
 #### Standard analyzer
 #### Smartcn analyzer
 
+## Field Type
+
+
 ## Mapping
 #### Check mapping
 #### Create mapping
