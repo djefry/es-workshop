@@ -19,26 +19,30 @@ Basically you don't need to think much about this because when you run docker-co
 ## Mapping
 
 ## Index Operation
-#### Auto create index
+#### Auto create document key
+```
 POST article/_doc
 {
   "title": "World War III Films",
   "description": "Film that shows the situation of world war III"
 }
-
+```
+#### Replace data
+```
 PUT article/_doc/1
 {
   "title": "The Witcher III",
   "description": "Game that use by most of reviewer to test the GPU or gaming performance"
 }
-
+```
 #### Partial update data
+```
 POST article/_doc/1/_update
 {
   "title": "Residen Evil",
   "description": "Another game that use by reviewer to test gamming performance"
 }
-
+```
 ## Check Index
 
 ## Search Operation
