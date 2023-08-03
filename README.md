@@ -13,10 +13,18 @@ Basically you don't need to think much about this because when you run docker-co
 - kibana:7.17.7
 
 ## Index Operation
+#### List all index
+#### Create index
+#### Delete index
+#### Check mapping
 
 ## Analyzer
+#### Standard analyzer
+#### Smartcn analyzer
 
 ## Mapping
+#### Create mapping
+We can only add to current mapping, can't rename, delete if you want to rename or delete field you should recreate the mapping.
 
 ## Index Operation
 #### Auto create document key
