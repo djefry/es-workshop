@@ -46,3 +46,7 @@ POST article/_doc/1/_update
 ## Check Index
 
 ## Search Operation
+#### Exact Search
+#### Matching Search
+#### Autocomplete Search
+#### Typo Correction
