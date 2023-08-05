@@ -3,16 +3,16 @@ services:
   elasticsearch:
     image: elasticsearch:7.17.7
     environment:
-      - discovery.type=single-node
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g
-      - xpack.security.enabled=false
+      - discovery.type=single-node  # single node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g  # Xms -> initial heap size Xmx -> maximum heap size
+      - xpack.security.enabled=false  # disabled security such as SSL, TLS, RBAC etc. only test not recommend in production
     volumes:
-      - es_data:/usr/share/elasticsearch/data
+      - es_data:/usr/share/elasticsearch/data  # to make es data persistent should describe bellow
     ports:
       - target: 9200
         published: 9200
     networks:
-      - elastic
+      - elastic  # network that use by this service should describe bellow
 
   kibana:
     image: kibana:7.17.7
@@ -22,7 +22,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - elastic
+      - elastic  # kibana should in the same network with elasticsearch service
 
 volumes:
   es_data:
