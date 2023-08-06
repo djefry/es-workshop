@@ -13,9 +13,56 @@ Basically you don't need to think much about this because when you run docker-co
 - kibana:7.17.7
 
 ## Index Operation
-#### List all index
-#### Create index
-#### Delete index
+#### List all index without header
+```
+GET /_cat/indices
+```
+
+#### List all index with detail
+```
+GET /_cat/indices?v
+```
+
+#### Create Index
+```
+PUT /article1
+```
+
+#### Check Index
+```
+GET /article1
+```
+
+#### Delete Index
+```
+DELETE /article1
+```
+
+#### Create index with settings
+```
+PUT /article2/_settings
+{
+  "analysis": {
+    "filter": {
+      "autocomplete_filter": {
+        "type": "edge_ngram",
+        "min_gram": "1",
+        "max_gram": "50"
+      }
+    },
+    "analyzer": {
+      "autocomplete_analyzer": {
+        "filter": [
+          "lowercase",
+          "edgengram_filter"
+        ],
+        "type": "custom",
+        "tokenizer": "whitespace"
+      }
+    }
+  }
+}
+```
 
 ## Analyzer
 #### Standard analyzer
