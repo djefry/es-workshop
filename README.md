@@ -186,6 +186,15 @@ POST /_analyze
 }
 ```
 
+#### Autocomplete analyzer test
+```
+POST /article2/_analyze
+{
+  "analyzer": "autocomplete_analyzer",
+  "text": "新冠肺炎疫情的现状 - current state of covid pandemic"
+}
+```
+
 ## Install Custom Analyzer
 ```
 docker ps  # check the available running docker
