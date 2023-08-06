@@ -65,11 +65,151 @@ PUT /article2/_settings
 ```
 
 ## Analyzer
-#### Standard analyzer
-#### Smartcn analyzer
+#### Character Filter
+```
+PUT /character_filter_test
+{
+  "settings": {
+    "analysis": {
+      "char_filter": {
+        "my_custom_char_filter": {
+          "type": "mapping",
+          "mappings": ["&=>and"]
+        }
+      },
+      "analyzer": {
+        "my_custom_analyzer": {
+          "tokenizer": "standard",
+          "char_filter": ["my_custom_char_filter"]
+        }
+      }
+    }
+  }
+}
+```
+
+#### Test Character Filter
+```
+POST /character_filter_test/_analyze
+{
+  "analyzer": "my_custom_analyzer",
+  "text": "Apples & Bananas"
+}
+```
+
+#### Tokenizer
+```
+PUT /tokenizer_test
+{
+  "settings": {
+    "analysis": {
+      "tokenizer": {
+        "my_custom_tokenizer": {
+          "type": "whitespace"
+        }
+      }
+    }
+  }
+}
+```
+
+#### Test Tokenizer
+```
+POST /tokenizer_test/_analyze
+{
+  "tokenizer": "my_custom_tokenizer",
+  "text": "Apples & Bananas"
+}
+```
+
+#### Token Filter
+```
+PUT /token_filter_test
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "my_custom_token_filter": {
+          "type": "lowercase"
+        }
+      },
+      "analyzer": {
+        "my_custom_analyzer": {
+          "tokenizer": "standard",
+          "filter": ["my_custom_token_filter"]
+        }
+      }
+    }
+  }
+}
+```
+
+#### Test token filter
+```
+POST /token_filter_test/_analyze
+{
+  "analyzer": "my_custom_analyzer",
+  "text": "This is a SAMPLE & Text"
+}
+```
+
+#### Analyzer Test
+```
+POST /_analyze
+{
+  "analyzer": "standard",
+  "text": "This is a SAMPLE & Text"
+}
+
+POST /_analyze
+{
+  "analyzer": "standard",
+  "text": "你好吗 - nihaoma"
+}
+
+POST /_analyze
+{
+  "analyzer": "smartcn",
+  "text": "你好吗 - nihaoma"
+}
+
+POST /_analyze
+{
+  "analyzer": "smartcn",
+  "text": "新冠肺炎疫情的现状 - current state of covid pandemic"
+}
+
+POST /_analyze
+{
+  "analyzer": "standard",
+  "text": "新冠肺炎疫情的现状 - current state of covid pandemic"
+}
+```
+
+## Install Custom Analyzer
+```
+docker ps  # check the available running docker
+docker exec -it docker_elasticsearch_1 bash # the second from the last is the name of container
+# Install
+/usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-smartcn
+# Uninstall
+/usr/share/elasticsearch/bin/elasticsearch-plugin remove analysis-smartcn
+```
+[List of available plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis.html)
 
 ## Field Type
+### Keyword
+Keyword is non analyzed type of data so elasticsearch will keep as is in the index (usefull for agregation and exact match)
+### Text
+Text data will always analyzed if we not define the analyzer it will user standard analyzer
+### Number
+For number data type
+### Boolean
+For true or false data type
+### Datetime
+For datetime data type
 
+[List of supported datatype](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html)
 
 ## Mapping
 #### Check mapping
