@@ -15,6 +15,9 @@ Basically you don't need to think much about this because when you run docker-co
 ### How to use
 - clone this repository
 - run `docker-compose up`
+- goto localhost:5601
+- choose Explore on my own
+- choose menu (three line icon on top left) -> management -> dev tools
 
 ## Index Operation
 #### List all index without header
