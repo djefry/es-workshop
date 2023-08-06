@@ -206,6 +206,11 @@ docker exec -it docker_elasticsearch_1 bash # the second from the last is the na
 ```
 [List of available plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis.html)
 
+### List plugins installed
+```
+GET /_cat/plugins
+```
+
 ## Field Type
 ### Keyword
 Keyword is non analyzed type of data so elasticsearch will keep as is in the index (usefull for agregation and exact match)
@@ -221,9 +226,97 @@ For datetime data type
 [List of supported datatype](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html)
 
 ## Mapping
-#### Check mapping
-#### Create mapping
 We can only add to current mapping, can't rename, delete if you want to rename or delete field you should recreate the mapping.
+### Update index with mappings
+```
+PUT /article2/_mapping
+{
+  "properties": {
+    "title": {
+      "analyzer": "autocomplete_analyzer",
+      "fields": {
+        "keyword": {
+          "type": "keyword"
+        }
+      },
+      "type": "text"
+    },
+    "descripton": {
+      "fields": {
+        "keyword": {
+          "type": "keyword"
+        }
+      },
+      "type": "text"
+    },
+    "likes": {
+      "type": "long"
+    }
+  }
+}
+```
+
+### Get mappings
+```
+GET /article2/_mapping
+```
+
+### Create Index with settings and mapping
+```
+PUT /article2
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "autocomplete_filter": {
+          "type": "edge_ngram",
+          "min_gram": "1",
+          "max_gram": "50"
+        }
+      },
+      "analyzer": {
+        "autocomplete_analyzer": {
+          "filter": [
+            "lowercase",
+            "autocomplete_filter"
+          ],
+          "type": "custom",
+          "tokenizer": "whitespace"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "title": {
+        "analyzer": "autocomplete_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "type": "text"
+      },
+      "descripton": {
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "type": "text"
+      },
+      "likes": {
+        "type": "long"
+      }
+    }
+  }
+}
+```
+
+### Check article2 mapping and setting
+```
+GET /article2
+```
 
 ## Index Operation
 #### Auto create document key
