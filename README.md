@@ -212,15 +212,15 @@ GET /_cat/plugins
 ```
 
 ## Field Type
-### Keyword
+- Keyword \
 Keyword is non analyzed type of data so elasticsearch will keep as is in the index (usefull for agregation and exact match)
-### Text
+- Text \
 Text data will always analyzed if we not define the analyzer it will user standard analyzer
-### Number
+- Number \
 For number data type
-### Boolean
+- Boolean \
 For true or false data type
-### Datetime
+- Datetime \
 For datetime data type
 
 [List of supported datatype](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html)
