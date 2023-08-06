@@ -366,7 +366,7 @@ GET article2/_doc/2
 ```
 PUT /article2/_doc/1
 {
-  "title": "Residen Evil",
+  "title": "Resident Evil",
   "description": "Another game that use by reviewer to test gamming performance"
 }
 ```
@@ -387,7 +387,50 @@ DELETE article2/_doc/1
 ```
 
 ## Search Operation
-#### Exact Search
+### Search without parameter
+Elasticsearch will perform a search on all documents in the specified index and will return the top 10 results (default value for size parameter).
+
+### Exact Match Search
+#### Exact match search
+```
+GET /article2/_search
+{
+  "query": {
+    "term": {
+      "title.keyword": "Resident Evil"
+    }
+  }
+}
+```
+
+#### Exact match with lower case query
+```
+GET /article2/_search
+{
+  "query": {
+    "term": {
+      "title.keyword": "resident evil"
+    }
+  }
+}
+```
+
+#### Exact match support lowercase search
+```
+GET /article2/_search
+{
+  "query": {
+    "term": {
+      "title.keyword": {
+        "value": "resident evil",
+        "case_insensitive": true
+      }
+    }
+  }
+}
+```
+
 #### Matching Search
+
 #### Autocomplete Search
 #### Typo Correction
