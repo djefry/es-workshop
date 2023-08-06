@@ -389,6 +389,9 @@ DELETE article2/_doc/1
 ## Search Operation
 ### Search without parameter
 Elasticsearch will perform a search on all documents in the specified index and will return the top 10 results (default value for size parameter).
+```
+GET /article2/_search
+```
 
 ### Exact Match Search
 #### Exact match search
@@ -430,7 +433,218 @@ GET /article2/_search
 }
 ```
 
-#### Matching Search
+### Matching Search
+#### Dummy Data For Next Search
+```
+PUT /article2/_doc/3
+{
+  "title": "Primary Resident",
+  "description": "Primary Resident for living in the city"
+}
 
-#### Autocomplete Search
+PUT /article2/_doc/4
+{
+  "title": "Resident Evil II",
+  "description": "Successor of the resident evil 1"
+}
+
+PUT /article2/_doc/5
+{
+  "title": "Residual Agent",
+  "description": "Film about the living residence in the city"
+}
+
+PUT /article2/_doc/6
+{
+  "title": "Resilience",
+  "description": "Book that tells us how to build resilience"
+}
+```
+
+#### Simple match query
+```
+GET /article2/_search
+{
+  "query": {
+    "term": {
+      "title": "resident"
+    }
+  }
+}
+
+GET /article2/_search
+{
+  "query": {
+    "term": {
+      "title": "Resident"
+    }
+  }
+}
+
+GET /article2/_search
+{
+  "query": {
+    "match": {
+      "title": {
+        "query": "Resident",
+        "analyzer": "standard"
+      }
+    }
+  }
+}
+
+GET /article2/_search
+{
+  "query": {
+    "match": {
+      "description": "game living"
+    }
+  }
+}
+```
+
+#### Bollean matching query
+```
+GET /article2/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "description": "game living"
+          }
+        }
+      ],
+      "should": [
+        {
+          "match": {
+            "description": "city"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match": {
+            "title": "evil"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+#### Span First Query
+```
+GET /article2/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "resident"
+          }
+        }
+      ]
+    }
+  }
+}
+
+GET /article2/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "resident"
+          }
+        }
+      ],
+      "should": [
+        {
+          "span_first": {
+            "match": {
+              "span_term": {
+                "title": "resident"
+              }
+            },
+            "end": 1
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+#### Exact pharse in text field
+```
+GET /article2/_search
+{
+  "query": {
+    "match_phrase": {
+      "title": "resident evil"
+    }
+  }
+}
+```
+
+#### Auto complete
+```
+GET /article2/_search
+{
+  "query": {
+    "match": {
+      "title": "r"
+    }
+  }
+}
+```
+
+#### Auto complete with span first
+```
+GET /article2/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "r"
+          }
+        }
+      ],
+      "should": [
+        {
+          "span_first": {
+            "match": {
+              "span_term": {
+                "title": "r"
+              }
+            },
+            "end": 2
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
 #### Typo Correction
+```
+GET /article2/_search
+{
+  "query": {
+    "fuzzy": {
+      "description": {
+        "value": "citi",
+        "fuzziness": "AUTO"
+      }
+    }
+  }
+}
+```
