@@ -318,32 +318,73 @@ PUT /article2
 GET /article2
 ```
 
-## Index Operation
-#### Auto create document key
+## Indexing Operation
+### Add data to index 
+#### Automatically creating the document id also we can automatically create the index
 ```
-POST article/_doc
+POST article2/_doc
+{
+  "title": "World War III Films",
+  "description": "Film that shows the situation of world war III",
+  "likes": 1000
+}
+
+POST article2/_doc
 {
   "title": "World War III Films",
   "description": "Film that shows the situation of world war III"
 }
 ```
-#### Replace data
+
+#### Specify manually the document id
 ```
-PUT article/_doc/1
+POST article2/_doc/1
+{
+  "title": "The Witcher III",
+  "description": "Game that use by most of reviewer to test the GPU or gaming performance",
+  "likes": 500
+}
+
+PUT article2/_doc/2
 {
   "title": "The Witcher III",
   "description": "Game that use by most of reviewer to test the GPU or gaming performance"
 }
 ```
-#### Partial update data
+
+#### Get specific document
 ```
-POST article/_doc/1/_update
+GET /article2/_doc/<id_article>
+
+GET article2/_doc/1
+
+GET article2/_doc/2
+```
+
+### Update specific document
+#### Update with replace
+```
+PUT /article2/_doc/1
 {
   "title": "Residen Evil",
   "description": "Another game that use by reviewer to test gamming performance"
 }
 ```
-## Check Index
+
+#### Partial Update
+```
+POST article2/_update/1
+{ 
+  "doc": {
+    "likes": 1200
+  }
+}
+```
+
+#### Delete Data
+```
+DELETE article2/_doc/1
+```
 
 ## Search Operation
 #### Exact Search
