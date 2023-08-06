@@ -12,6 +12,10 @@ Basically you don't need to think much about this because when you run docker-co
 - elasticsearch:7.17.7
 - kibana:7.17.7
 
+### How to use
+- clone this repository
+- run `docker-compose up`
+
 ## Index Operation
 #### List all index without header
 ```
